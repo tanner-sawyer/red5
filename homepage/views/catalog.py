@@ -1,6 +1,3 @@
-from django.conf import settings
-from django import forms
-from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.http import HttpRequest
 from django.contrib.auth import authenticate, login
 from django_mako_plus.controller import view_function
@@ -14,5 +11,10 @@ templater = get_renderer('homepage')
 @view_function
 def process_request(request):
   params = {}
+
+  asset = hmod.Asset.objects.all()
+
+  params['asset'] = asset
   
-  return templater.render_to_response(request, 'index.html', params)
+  return templater.render_to_response(request, 'catalog.html', params)
+
