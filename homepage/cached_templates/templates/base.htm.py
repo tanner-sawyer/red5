@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1448140711.243386
+_modified_time = 1448144856.973823
 _enable_loop = True
 _template_filename = 'C:\\Python34\\Lib\\site-packages\\django\\bin\\red5\\homepage\\templates/base.htm'
 _template_uri = 'base.htm'
@@ -21,9 +21,9 @@ def render_body(context,**pageargs):
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
         request = context.get('request', UNDEFINED)
+        self = context.get('self', UNDEFINED)
         def content():
             return render_content(context._locals(__M_locals))
-        self = context.get('self', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\r\n')
         __M_writer('\r\n')
@@ -31,7 +31,7 @@ def render_body(context,**pageargs):
         
         __M_locals_builtin_stored = __M_locals_builtin()
         __M_locals.update(__M_dict_builtin([(__M_key, __M_locals_builtin_stored[__M_key]) for __M_key in ['static_renderer'] if __M_key in __M_locals_builtin_stored]))
-        __M_writer('\r\n\r\n<!DOCTYPE html>\r\n<html>\r\n  <meta charset="UTF-8">\r\n  <head>\r\n\r\n    <title>The Catalog Master X700</title>\r\n    \r\n')
+        __M_writer('\r\n\r\n<!DOCTYPE html>\r\n<html>\r\n  <meta charset="UTF-8">\r\n  <head>\r\n    <title>The Catalog Master X700</title>\r\n    \r\n')
         __M_writer('    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>\r\n  \r\n')
         __M_writer('    \r\n    ')
         __M_writer(str( static_renderer.get_template_css(request, context)  ))
@@ -63,6 +63,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"filename": "C:\\Python34\\Lib\\site-packages\\django\\bin\\red5\\homepage\\templates/base.htm", "line_map": {"64": 58, "34": 5, "35": 15, "36": 18, "37": 19, "38": 19, "43": 44, "44": 59, "45": 59, "46": 59, "17": 4, "19": 0, "52": 42, "58": 42, "28": 2, "29": 4, "30": 5}, "source_encoding": "utf-8", "uri": "base.htm"}
+{"source_encoding": "utf-8", "line_map": {"64": 58, "34": 5, "35": 14, "36": 17, "37": 18, "38": 18, "43": 43, "44": 58, "45": 58, "46": 58, "17": 4, "19": 0, "52": 41, "58": 41, "28": 2, "29": 4, "30": 5}, "uri": "base.htm", "filename": "C:\\Python34\\Lib\\site-packages\\django\\bin\\red5\\homepage\\templates/base.htm"}
 __M_END_METADATA
 """

@@ -29,18 +29,20 @@
             <th class="filter-select" data-placeholder="All">Maintainence Note <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></th>             <th class="filter-false"></th>
           </tr>
         </thead>
+        %for a in asset:
         <tbody>
           <tr>
-           <td></td>
-           <td></td>
-           <td></td>
-           <td></td>
-           <td></td>
-           <td></td>
-           <td></td>
-           <td></td>
-           <td></td>
+           <td>${ a.asset_code }</td>
+           <td>${ a.description }</td>
+           <td>${ a.date_acquired }</td>
+           <td>${ a.location }</td>
+           <td>${ a.organization_type }</td>
+           <td>${ a.date_assigned }</td>
+           <td>${ a.manufacturer }</td>
+           <td>${ a.part_num }</td>
+           <td>${ a.maintenance_note }</td>
           </tr>
+        %endfor
         </tbody>
       </table>
     </div>

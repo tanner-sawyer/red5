@@ -6,20 +6,17 @@ class Asset(models.Model):
 	date_acquired = models.DateField(null=True, blank=True)
 	pass
 
-class Assignment(models.Model):
-	asset = models.ForeignKey(Asset)
+class Assignment(Asset):
 	location = models.TextField(max_length=30, null=True, blank=True)
 	organization_type = models.TextField(max_length=30, null=True, blank=True)
 	date_assigned = models.DateField(null=True, blank=True)
 	pass
 
-class Manufacturer(models.Model):
-	asset = models.ForeignKey(Asset)
+class Manufacturer(Asset):
 	manufacturer = models.TextField(max_length=30, null=True, blank=True)
 	part_num = models.TextField(max_length=30, null=True, blank=True)
 	pass
 
-class Maintenance(models.Model):
-	asset = models.ForeignKey(Asset)
+class Maintenance(Asset):
 	maintenance_note = models.TextField(max_length=255, null=True, blank=True)
 	pass
