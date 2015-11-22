@@ -39,12 +39,12 @@ def edit(request):
     'manufacturer': asset.manufacturer,
     'part_num': asset.part_num,
     'maintenance_note': asset.maintenance_note,
-  }, asset=request.asset)
+  })
   if request.method == 'POST':
-    form = assetEditForm(request.POST)
+    form = AssetForm(request.POST)
     if form.is_valid():
       asset.asset_code = form.cleaned_data['asset_code']
-      asset.description(form.cleaned_data['description'])
+      asset.description = form.cleaned_data['description']
       asset.date_acquired = form.cleaned_data['date_acquired']
       asset.location = form.cleaned_data['location']
       asset.organization_type = form.cleaned_data['organization_type']
@@ -56,8 +56,9 @@ def edit(request):
       return HttpResponseRedirect('/catalog/')
 
   params['asset'] = asset
+  params['form'] = form
   
-  return templater.render_to_response(request, 'catalog.html', params)
+  return templater.render_to_response(request, 'catalog.edit.html', params)
 
 
 @view_function
@@ -67,7 +68,7 @@ def create(request):
   a = hmod.Asset.objects.all().order_by("-id")
   if len(a) > 0:
   	if a[0].asset_code == '':
-  		return HttpResponseRedirect('catalog.edit')
+  		return HttpResponseRedirect('/catalog.edit/{}'.format(a[0].id))
 
   asset = hmod.Asset()
   asset.asset_code = ''
@@ -76,7 +77,6 @@ def create(request):
   asset.location = ''
   asset.organization_type = ''
   asset.date_assigned = None
-  asset.manufacturer = ''
   asset.part_num = ''
   asset.maintenance_note = ''
   asset.save()
@@ -86,13 +86,33 @@ def create(request):
   return HttpResponseRedirect('/catalog.edit/{}'.format(asset.id))
 
 
+@view_function
+def delete(request):
+  params = {}
+
+  try:
+    asset = hmod.Asset.objects.get(id=request.urlparams[0])
+  except hmod.Asset.DoesNotExist:
+    return HttpResponseRedirect('/catalog/')
+
+  asset.delete()
+ 
+  return HttpResponseRedirect('/catalog/')
+
+
 class AssetForm(forms.Form):
+	CHOICES = (
+			('L', 'Lockheed Martin'),
+			('W', 'Wal-Mart'),
+			('B', 'Best Buy'),
+			('N', 'Naboo'),
+		)
 	asset_code = forms.CharField(max_length=10)
 	description = forms.CharField(max_length=255)
 	date_acquired = forms.DateField()
 	location = forms.CharField(max_length=30)
 	organization_type = forms.CharField(max_length=30)
 	date_assigned = forms.DateField()
-	manufacturer = forms.CharField(max_length=30)
+	manufacturer = forms.ChoiceField(choices=CHOICES)
 	part_num = forms.CharField(max_length=30)
 	maintenance_note = forms.CharField(max_length=255)
