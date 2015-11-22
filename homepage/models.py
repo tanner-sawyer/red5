@@ -5,7 +5,6 @@ class Location(models.Model):
 	place = models.TextField(max_length=30, null=True, blank=True)
 
 
-
 class Manufacturers(models.Model):
 	name = models.TextField(max_length=30, null=True, blank=True)
 
