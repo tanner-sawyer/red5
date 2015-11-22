@@ -12,3 +12,11 @@ class Asset(models.Model):
 	manufacturer = models.TextField(max_length=30, null=True, blank=True)
 	pass
 
+
+class Manufacturers(models.Model):
+	name = models.TextField(max_length=30, null=True, blank=True)
+
+
+class Location(models.Model):
+	place = models.TextField(max_length=30, null=True, blank=True)
+
