@@ -9,6 +9,8 @@
           <div class="row ">
               <div class="hidden-xs col-sm-12 col-md-12 col-lg-12">
                   <h1 class="text-left">Catalog</h1>
+                  <input type="text" id="search_input">
+                  <btn id="search_btn" class="btn btn-primary">Search</btn>
                   <a href="/catalog.create/" class="pull-right btn btn-primary">Create New</a>
               </div>
           </div>
@@ -29,7 +31,7 @@
         %for a in asset:
         <tbody>
           <tr>
-           <td><a href="/catalog.edit/${a.id}">${ a.asset_code }</a></td>
+           <td class="asset_code"><a href="/catalog.edit/${a.id}">${ a.asset_code }</a></td>
            <td>${ a.description }</td>
            <td>${ a.date_acquired }</td>
            <td>${ a.location }</td>
