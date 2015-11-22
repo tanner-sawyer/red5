@@ -34,19 +34,11 @@
            <td class="asset_code"><a href="/catalog.edit/${a.id}">${ a.asset_code }</a></td>
            <td>${ a.description }</td>
            <td>${ a.date_acquired }</td>
-           <td>${ a.location }</td>
+           <td>${ a.location.place }</td>
            <td>${ a.organization_type }</td>
            <td>${ a.date_assigned }</td>
            <td>
-              %if a.manufacturer == 'W':
-                Wal-Mart
-              %elif a.manufacturer == 'L':
-                Lockheed Martin
-              %elif a.manufacturer == 'N':
-                Naboo
-              %else:
-                Best Buy
-              %endif
+              ${ a.manufacturer.name }
            </td>
            <td>${ a.part_num }</td>
            <td>${ a.maintenance_note }</td>

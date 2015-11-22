@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1448152574.125018
+_modified_time = 1448165556.234553
 _enable_loop = True
 _template_filename = 'C:\\Python34\\Lib\\site-packages\\django\\bin\\red5\\homepage\\templates/catalog.html'
 _template_uri = 'catalog.html'
@@ -51,9 +51,9 @@ def render_content(context,**pageargs):
             return render_content(context)
         asset = context.get('asset', UNDEFINED)
         __M_writer = context.writer()
-        __M_writer('\r\n \r\n <div class="row">\r\n    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\r\n      <table id="workOrderTable-Table" class="table table-striped table-hover tablesorter-bootstrap">\r\n        <caption class="active">\r\n          <div class="row ">\r\n              <div class="hidden-xs col-sm-12 col-md-12 col-lg-12">\r\n                  <h1 class="text-left">Catalog</h1>\r\n                  <a href="/catalog.create/" class="pull-right btn btn-primary">Create New</a>\r\n              </div>\r\n          </div>\r\n        </caption>\r\n        <thead>\r\n          <tr class="active">\r\n            <th>Asset Code</th>\r\n            <th>Description</th>\r\n            <th>Date Aquired</th>\r\n            <th>Assigned Location</th>\r\n            <th>Assigned Organization</th>\r\n            <th>Date Assigned</th>\r\n            <th>Manufacturer</th>          \r\n            <th>Part Number</th>          \r\n            <th>Maintainence Note</th>\r\n          </tr>\r\n        </thead>\r\n')
+        __M_writer('\r\n \r\n <div class="row">\r\n    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\r\n      <table id="workOrderTable-Table" class="table table-striped table-hover tablesorter-bootstrap">\r\n        <caption class="active">\r\n          <div class="row ">\r\n              <div class="hidden-xs col-sm-12 col-md-12 col-lg-12">\r\n                  <h1 class="text-left">Catalog</h1>\r\n                  <input type="text" id="search_input">\r\n                  <btn id="search_btn" class="btn btn-primary">Search</btn>\r\n                  <a href="/catalog.create/" class="pull-right btn btn-primary">Create New</a>\r\n              </div>\r\n          </div>\r\n        </caption>\r\n        <thead>\r\n          <tr class="active">\r\n            <th>Asset Code</th>\r\n            <th>Description</th>\r\n            <th>Date Aquired</th>\r\n            <th>Assigned Location</th>\r\n            <th>Assigned Organization</th>\r\n            <th>Date Assigned</th>\r\n            <th>Manufacturer</th>          \r\n            <th>Part Number</th>          \r\n            <th>Maintainence Note</th>\r\n          </tr>\r\n        </thead>\r\n')
         for a in asset:
-            __M_writer('        <tbody>\r\n          <tr>\r\n           <td><a href="/catalog.edit/')
+            __M_writer('        <tbody>\r\n          <tr>\r\n           <td class="asset_code"><a href="/catalog.edit/')
             __M_writer(str(a.id))
             __M_writer('">')
             __M_writer(str( a.asset_code ))
@@ -62,21 +62,14 @@ def render_content(context,**pageargs):
             __M_writer('</td>\r\n           <td>')
             __M_writer(str( a.date_acquired ))
             __M_writer('</td>\r\n           <td>')
-            __M_writer(str( a.location ))
+            __M_writer(str( a.location.place ))
             __M_writer('</td>\r\n           <td>')
             __M_writer(str( a.organization_type ))
             __M_writer('</td>\r\n           <td>')
             __M_writer(str( a.date_assigned ))
-            __M_writer('</td>\r\n           <td>\r\n')
-            if a.manufacturer == 'W':
-                __M_writer('                Wal-Mart\r\n')
-            elif a.manufacturer == 'L':
-                __M_writer('                Lockheed Martin\r\n')
-            elif a.manufacturer == 'N':
-                __M_writer('                Naboo\r\n')
-            else:
-                __M_writer('                Best Buy\r\n')
-            __M_writer('           </td>\r\n           <td>')
+            __M_writer('</td>\r\n           <td>\r\n              ')
+            __M_writer(str( a.manufacturer.name ))
+            __M_writer('\r\n           </td>\r\n           <td>')
             __M_writer(str( a.part_num ))
             __M_writer('</td>\r\n           <td>')
             __M_writer(str( a.maintenance_note ))
@@ -89,6 +82,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"64": 34, "65": 35, "66": 35, "67": 36, "68": 36, "69": 37, "70": 37, "71": 39, "72": 40, "73": 41, "74": 42, "75": 43, "76": 44, "77": 45, "78": 46, "79": 48, "80": 49, "81": 49, "82": 50, "83": 50, "84": 53, "90": 84, "28": 0, "36": 1, "41": 60, "47": 3, "54": 3, "55": 29, "56": 30, "57": 32, "58": 32, "59": 32, "60": 32, "61": 33, "62": 33, "63": 34}, "filename": "C:\\Python34\\Lib\\site-packages\\django\\bin\\red5\\homepage\\templates/catalog.html", "uri": "catalog.html", "source_encoding": "utf-8"}
+{"uri": "catalog.html", "filename": "C:\\Python34\\Lib\\site-packages\\django\\bin\\red5\\homepage\\templates/catalog.html", "source_encoding": "utf-8", "line_map": {"64": 36, "65": 37, "66": 37, "67": 38, "68": 38, "69": 39, "70": 39, "71": 41, "72": 41, "73": 43, "74": 43, "75": 44, "76": 44, "77": 47, "83": 77, "28": 0, "36": 1, "41": 54, "47": 3, "54": 3, "55": 31, "56": 32, "57": 34, "58": 34, "59": 34, "60": 34, "61": 35, "62": 35, "63": 36}}
 __M_END_METADATA
 """

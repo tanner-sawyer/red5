@@ -29,29 +29,38 @@ def edit(request):
   except hmod.Asset.DoesNotExist:
     return HttpResponseRedirect('/catalog/')
 
+  location = hmod.Location.objects.get(id=asset.location_id)
+
   form = AssetForm(initial={
     'asset_code': asset.asset_code,
     'description': asset.description,
     'date_acquired': asset.date_acquired,
-    'location': asset.pk,
+    'location': asset.location,
     'organization_type': asset.organization_type,
     'date_assigned': asset.date_assigned,
-    'manufacturer': asset.manufacturer.all(),
+    'manufacturer': asset.manufacturer,
     'part_num': asset.part_num,
     'maintenance_note': asset.maintenance_note,
   })
   if request.method == 'POST':
     form = AssetForm(request.POST)
+    print(form['location'])
     if form.is_valid():
       asset.asset_code = form.cleaned_data['asset_code']
       asset.description = form.cleaned_data['description']
       asset.date_acquired = form.cleaned_data['date_acquired']
-      asset.location = form.cleaned_data['location']
       asset.organization_type = form.cleaned_data['organization_type']
       asset.date_assigned = form.cleaned_data['date_assigned']
-      asset.manufacturer = form.cleaned_data['manufacturer']
+      # asset.manufacturer = form.cleaned_data['manufacturer']
       asset.part_num = form.cleaned_data['part_num']
       asset.maintenance_note = form.cleaned_data['maintenance_note']
+      print('>>>>>>>>>>>>>>>>>>>>>>')
+      print(form.cleaned_data['location'])
+      place = hmod.Location.objects.get(place=form.cleaned_data['location'])
+      name = hmod.Manufacturers.objects.get(name=form.cleaned_data['manufacturer'])
+      asset.location = place
+      asset.manufacturer = name
+
       asset.save()
       return HttpResponseRedirect('/catalog/')
 
@@ -70,14 +79,18 @@ def create(request):
   	if a[0].asset_code == '':
   		return HttpResponseRedirect('/catalog.edit/{}'.format(a[0].id))
 
+  location = hmod.Location.objects.get(id=1)
+  manufacturers = hmod.Manufacturers.objects.get(id=1)
+
   asset = hmod.Asset()
   asset.asset_code = ''
   asset.description = ''
   asset.date_acquired = None
-  asset.location = ''
+  asset.location = location
   asset.organization_type = ''
   asset.date_assigned = None
   asset.part_num = ''
+  asset.manufacturer = manufacturers
   asset.maintenance_note = ''
   asset.save()
 
@@ -101,18 +114,19 @@ def delete(request):
 
 
 class AssetForm(forms.Form):
-	CHOICES = (
-			('L', 'Lockheed Martin'),
-			('W', 'Wal-Mart'),
-			('B', 'Best Buy'),
-			('N', 'Naboo'),
-		)
-	asset_code = forms.CharField(max_length=10)
-	description = forms.CharField(max_length=255)
-	date_acquired = forms.DateField()
-	location = forms.ModelChoiceField(label='Location', queryset=hmod.Location.objects.all(), empty_label=None)
-	organization_type = forms.CharField(max_length=30)
-	date_assigned = forms.DateField()
-	manufacturer = forms.ModelChoiceField(label='Manufacturer', queryset=hmod.Manufacturers.objects.all(), empty_label=None)
-	part_num = forms.CharField(max_length=30)
-	maintenance_note = forms.CharField(max_length=255)
+  places = hmod.Location.objects.all().values_list('place', flat=True)
+  place_choices = [('', 'None')] + [(id, id) for id in places]
+  names = hmod.Manufacturers.objects.all().values_list('name',flat=True)
+  name_choices = [('', 'None')] + [(id, id) for id in names]
+
+  asset_code = forms.CharField(max_length=10)
+  description = forms.CharField(max_length=255)
+  date_acquired = forms.DateField()
+  location = forms.ChoiceField(place_choices, required=False)
+  # location = forms.ModelChoiceField(label='Location', queryset=hmod.Location.objects.all().values_list('place', flat=True), empty_label=None, required=False)
+  organization_type = forms.CharField(max_length=30)
+  date_assigned = forms.DateField()
+  manufacturer = forms.ChoiceField(name_choices, required=False)
+  # manufacturer = forms.ModelChoiceField(label='Manufacturer', queryset=hmod.Manufacturers.objects.all().values_list('name', flat=True), empty_label=None, required=False)
+  part_num = forms.CharField(max_length=30)
+  maintenance_note = forms.CharField(max_length=255)
