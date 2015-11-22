@@ -33,10 +33,10 @@ def edit(request):
     'asset_code': asset.asset_code,
     'description': asset.description,
     'date_acquired': asset.date_acquired,
-    'location': asset.location,
+    'location': asset.pk,
     'organization_type': asset.organization_type,
     'date_assigned': asset.date_assigned,
-    'manufacturer': asset.manufacturer,
+    'manufacturer': asset.manufacturer.all(),
     'part_num': asset.part_num,
     'maintenance_note': asset.maintenance_note,
   })
@@ -110,9 +110,9 @@ class AssetForm(forms.Form):
 	asset_code = forms.CharField(max_length=10)
 	description = forms.CharField(max_length=255)
 	date_acquired = forms.DateField()
-	location = forms.CharField(max_length=30)
+	location = forms.ModelChoiceField(label='Location', queryset=hmod.Location.objects.all(), empty_label=None)
 	organization_type = forms.CharField(max_length=30)
 	date_assigned = forms.DateField()
-	manufacturer = forms.ChoiceField(choices=CHOICES)
+	manufacturer = forms.ModelChoiceField(label='Manufacturer', queryset=hmod.Manufacturers.objects.all(), empty_label=None)
 	part_num = forms.CharField(max_length=30)
 	maintenance_note = forms.CharField(max_length=255)
