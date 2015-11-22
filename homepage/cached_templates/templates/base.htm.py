@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1448144856.973823
+_modified_time = 1448151495.069541
 _enable_loop = True
 _template_filename = 'C:\\Python34\\Lib\\site-packages\\django\\bin\\red5\\homepage\\templates/base.htm'
 _template_uri = 'base.htm'
@@ -20,10 +20,10 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        request = context.get('request', UNDEFINED)
         self = context.get('self', UNDEFINED)
         def content():
             return render_content(context._locals(__M_locals))
+        request = context.get('request', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\r\n')
         __M_writer('\r\n')
@@ -32,7 +32,7 @@ def render_body(context,**pageargs):
         __M_locals_builtin_stored = __M_locals_builtin()
         __M_locals.update(__M_dict_builtin([(__M_key, __M_locals_builtin_stored[__M_key]) for __M_key in ['static_renderer'] if __M_key in __M_locals_builtin_stored]))
         __M_writer('\r\n\r\n<!DOCTYPE html>\r\n<html>\r\n  <meta charset="UTF-8">\r\n  <head>\r\n    <title>The Catalog Master X700</title>\r\n    \r\n')
-        __M_writer('    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>\r\n  \r\n')
+        __M_writer('    <!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script-->\r\n      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>\r\n  <script src="https://code.jquery.com/jquery.js"></script>\r\n  <script src="js/header.js"></script>\r\n  <script src="js/bootstrap.min.js"></script>\r\n  <script src="js/jquery.tablesorter(old).js"></script> \r\n  <script src="js/jquery.tablesorter.widgets(old).js"></script>\r\n  <script type="text/javascript" src="js/moment.min.js"></script>\r\n  <script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>\r\n  \r\n')
         __M_writer('    \r\n    ')
         __M_writer(str( static_renderer.get_template_css(request, context)  ))
         __M_writer('\r\n  \r\n    <!-- Latest compiled and minified CSS -->\r\n    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">\r\n    <!-- Optional theme -->\r\n    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">\r\n    <!-- Latest compiled and minified JavaScript -->\r\n    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>\r\n  </head>\r\n  <body>\r\n  \r\n\r\n  <nav class="navbar navbar-inverse">\r\n    <div class="container">\r\n      <div class="navbar-header">\r\n        <a class="navbar-brand" href="#">The Catalog Master X700</a>\r\n      </div>\r\n    </div>\r\n  </nav>\r\n\r\n\r\n\r\n  \r\n    ')
@@ -43,7 +43,7 @@ def render_body(context,**pageargs):
         __M_writer('  \r\n\r\n\r\n    \r\n      \r\n\r\n\r\n      <hr>\r\n\r\n      <footer>\r\n        <p>Red 5 2014</p>\r\n      </footer>\r\n  \r\n  \r\n')
         __M_writer('    ')
         __M_writer(str( static_renderer.get_template_js(request, context)  ))
-        __M_writer('\r\n  \r\n  </body>\r\n\r\n  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>\r\n\r\n</html>\r\n')
+        __M_writer('\r\n  \r\n  </body>\r\n\r\n\r\n\r\n\r\n</html>\r\n')
         return ''
     finally:
         context.caller_stack._pop_frame()
@@ -63,6 +63,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"source_encoding": "utf-8", "line_map": {"64": 58, "34": 5, "35": 14, "36": 17, "37": 18, "38": 18, "43": 43, "44": 58, "45": 58, "46": 58, "17": 4, "19": 0, "52": 41, "58": 41, "28": 2, "29": 4, "30": 5}, "uri": "base.htm", "filename": "C:\\Python34\\Lib\\site-packages\\django\\bin\\red5\\homepage\\templates/base.htm"}
+{"source_encoding": "utf-8", "line_map": {"64": 58, "34": 5, "35": 14, "36": 25, "37": 26, "38": 26, "43": 51, "44": 66, "45": 66, "46": 66, "17": 4, "19": 0, "52": 49, "58": 49, "28": 2, "29": 4, "30": 5}, "filename": "C:\\Python34\\Lib\\site-packages\\django\\bin\\red5\\homepage\\templates/base.htm", "uri": "base.htm"}
 __M_END_METADATA
 """

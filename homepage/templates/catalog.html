@@ -15,7 +15,7 @@
         </caption>
         <thead>
           <tr class="active">
-            <th class="filter-select" data-placeholder="Search">Asset Code <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></th>
+            <th>Asset Code</th>
             <th data-placeholder="Search">Description <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></th>
             <th class="sorter-shortDate" data-placeholder="Date">Date Aquired <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></th>
             <th id="dueDateHeader" class="filter-select" data-placeholder="Date">Assigned Location <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></th>
@@ -29,7 +29,7 @@
         %for a in asset:
         <tbody>
           <tr>
-           <td>${ a.asset_code }</td>
+           <td><a href="/catalog.edit${ a.asset_code }</td>
            <td>${ a.description }</td>
            <td>${ a.date_acquired }</td>
            <td>${ a.location }</td>
@@ -58,3 +58,4 @@
 </div><!-- /.container-fluid -->
  
 </%block>
+
