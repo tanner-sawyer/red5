@@ -6,7 +6,29 @@
 <script type="text/javascript" src="js/moment.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
 <script>
+var start = 0
+var end = 0
 
+var selectBetweenStartEnd = function (checked) {
+  var rows = $("tr.workorder-clickable").filter(function () {
+    return $(this).css("display") != "none" 
+  })
+  if (start > end){
+    var temp = start
+    start = end
+    end = temp
+  }
+  for (var i = start; i < end; i++){
+    //$(rows[i]).find('.tc-checkbox').trigger("click")
+    if(!checked) {
+      $(rows[i]).find('.tc-checkbox').find('.glyphicon').addClass("glyphicon-unchecked").removeClass("glyphicon-check")
+      $(rows[i]).removeClass("selected")
+    } else {
+      $(rows[i]).find('.tc-checkbox').find('.glyphicon').removeClass("glyphicon-unchecked").addClass("glyphicon-check")
+      $(rows[i]).addClass("selected")
+    }
+  }
+}
 
 $('tbody tr').on('click', function (evt) {
 
@@ -16,11 +38,69 @@ $('tbody tr').on('click', function (evt) {
   form.append(input)
   $('body').append(form)
   form.submit()
+  // var id = $(evt.target).parent().attr('id')
+  // var name = $(evt.target).parent().attr('data-name')
+  // var form = $('<form method="post" action="tc-doc_assignWorkorder.php" hidden></form>')
+  // var input = $('<input hidden name="id" value="'+id+'"></input>')
+  // $("#myModal").modal('show');
+  // $(".modal-body").find("#wo-id").val(id);
+  // $(".modal-body").find(".wo-name").html(name);
 
+  // $('body').append(form)
+  // form.submit()
+  //window.location = 'tc-records_view-record.php'
+})
+$('tbody tr td:first-child input').on('click', function (evt) {
+  evt.stopPropagation()
 })
 
+$('tbody tr td:first-child').on('click', function (evt) {
+  evt.stopPropagation()
+  $(evt.target).find(".btn").trigger("click")
+})
 
+$('.tc-checkbox > span').on("click", function (evt) {
+  var shiftPressed = 0
+  var event = evt || window.event
+  shiftPressed = event.shiftKey
+  if(!shiftPressed) {
+    start = $(evt.target).toggleClass("glyphicon-unchecked glyphicon-check").closest("tr").toggleClass("selected").prevAll("tr").filter(function () {
+      return $(this).css("display") != "none" 
+    }).length
+  } else {
+    end = $(evt.target).toggleClass("glyphicon-unchecked glyphicon-check").closest("tr").toggleClass("selected").prevAll("tr").filter(function () {
+      return $(this).css("display") != "none" 
+    }).length
+    var checked = $(evt.target).hasClass("glyphicon-check")
+    selectBetweenStartEnd(checked)
+  }
+  evt.stopPropagation()
+})
 
+$('.tc-checkbox').on("click", function (evt) {
+  $(evt.target).find('.glyphicon').toggleClass("glyphicon-unchecked glyphicon-check")
+  var shiftPressed = 0
+  var event = evt || window.event
+  shiftPressed = event.shiftKey
+  if(!shiftPressed) {
+    start = $(evt.target).closest("tr").toggleClass("selected").prevAll("tr").filter(function () {
+      return $(this).css("display") != "none" 
+    }).length
+  } else {
+    end = $(evt.target).closest("tr").toggleClass("selected").prevAll("tr").filter(function () {
+      return $(this).css("display") != "none" 
+    }).length
+    var checked = $(evt.target).find('.glyphicon').hasClass("glyphicon-check")
+    selectBetweenStartEnd(checked)
+  }
+  evt.stopPropagation()
+})
+
+var workorderTextExtraction = function(node)  
+{  
+    // extract data from markup and return it  
+    return node.innerHTML.split("-").join("").toLowerCase();
+} 
 
 $(function(){
   
@@ -158,7 +238,6 @@ function updateTable () {
         })
     }
   })
-
   $('input').unbind('blur').on('blur', function (evt) {
     var dataColumn = $(evt.target).attr("data-column")
     $('input[data-column="'+dataColumn+'"]').trigger("search-blur")
@@ -167,6 +246,8 @@ function updateTable () {
       $(evt.target).next().remove()
     }
   })
+
+  $('input.disabled').addClass('hidden')
 
   $("thead.tablesorter-stickyHeader > tr.tablesorter-filter-row > td.clearable > input.tablesorter-filter").unbind('blur').on("blur", function (evt) {
     if (evt.target.value){
@@ -180,9 +261,51 @@ function updateTable () {
   $("thead").find("input[placeholder=Date]").unbind('click').on('click', function () {
     $(this).trigger("focus")
   })
-
+  $("#workOrderTable-Table-sticky").find("input[placeholder=Date]").on("blur", function (evt) {
+    $("#workOrderTable-Table").find("input[placeholder=Date]").blur()
+  })
 
   $("input[data-column=2]").trigger("focus")
+
+  $(".completeBtn").unbind('click').on("click", function (evt) {
+    var workorders = []
+    $.each($(".selectableOrder > .glyphicon-check"), function (index, value) {
+      workorders.push($(value).closest("tr").attr("id"))
+    })
+    if (workorders.length){
+      $.post("tc-doc_markComplete.php", { 'workorders[]': workorders}, function (data) {
+       location.reload();
+      })
+    } else {
+      $(".closemultipleAlert").fadeIn()
+      setTimeout(function () {
+        $(".closemultipleAlert").fadeOut()
+      }, 5000)
+    }
+  })
+
+
+  $(".printBtn").unbind('click').on("click", function (evt) {
+    var printTBody = $("#printTBody").html("")
+    var workorders = []
+    $.each($(".selectableOrder > .glyphicon-check"), function (index, value) {
+      var tr = $(value).closest("tr")
+      workorders.push(tr.attr("id"))
+      var trPrint = $("<tr></tr>")
+      trPrint.attr('class', tr.attr('class')) 
+      trPrint.append(tr.find(".printable").clone()) 
+      printTBody.append(trPrint)
+    })
+    if (workorders.length){
+      window.print()
+    } else {
+      $(".printmultipleAlert").fadeIn()
+      setTimeout(function () {
+        $(".printmultipleAlert").fadeOut()
+      }, 5000)
+    }
+  })
+
     
 }
 
