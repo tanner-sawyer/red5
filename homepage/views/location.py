@@ -78,4 +78,4 @@ def delete(request):
 
 
 class LocForm(forms.Form):
-  place = forms.CharField(max_length=255)
+  place = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),max_length=255)

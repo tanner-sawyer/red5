@@ -77,4 +77,4 @@ def delete(request):
 
 
 class ManForm(forms.Form):
-  name = forms.CharField(max_length=255)
+  name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),max_length=255)
