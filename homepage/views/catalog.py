@@ -109,20 +109,27 @@ def delete(request):
   return HttpResponseRedirect('/catalog/')
 
 
+def getChoices():
+  choice_list = list(hmod.Location.objects.values_list('id','place'))
+  return choice_list
+
+def getMan():
+  choice_list = list(hmod.Manufacturers.objects.values_list('id','name'))
+  return choice_list
+
 class AssetForm(forms.Form):
-  places = hmod.Location.objects.all().values_list('place', flat=True)
-  place_choices = [('', 'None')] + [(id, id) for id in places]
-  names = hmod.Manufacturers.objects.all().values_list('name',flat=True)
-  name_choices = [('', 'None')] + [(id, id) for id in names]
+
+  def __init__(self, *args, **kwargs):
+    super(AssetForm, self).__init__(*args, **kwargs)
+    self.fields['location'].choices = getChoices()
+    self.fields['manufacturer'].choices = getMan()
 
   asset_code = forms.CharField(max_length=10)
   description = forms.CharField(max_length=255)
   date_acquired = forms.DateField()
-  location = forms.ChoiceField(place_choices, required=False)
-  # location = forms.ModelChoiceField(label='Location', queryset=hmod.Location.objects.all().values_list('place', flat=True), empty_label=None, required=False)
+  location = forms.ChoiceField(required=False)
   organization_type = forms.CharField(max_length=30)
   date_assigned = forms.DateField()
-  manufacturer = forms.ChoiceField(name_choices, required=False)
-  # manufacturer = forms.ModelChoiceField(label='Manufacturer', queryset=hmod.Manufacturers.objects.all().values_list('name', flat=True), empty_label=None, required=False)
+  manufacturer = forms.ChoiceField(label='Manufacturer', required=False)
   part_num = forms.CharField(max_length=30)
   maintenance_note = forms.CharField(max_length=255)
