@@ -34,7 +34,6 @@ def edit(request):
   })
   if request.method == 'POST':
     form = LocForm(request.POST)
-    print(form['location'])
     if form.is_valid():
       location.place = form.cleaned_data['place']
       location.save()
