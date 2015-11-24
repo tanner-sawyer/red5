@@ -1,6 +1,11 @@
 <%inherit file="base.htm" />
 
 <%block name="content">
+ <div class="row">
+  <input class="pull-right" type="text" id="search_input">
+  <btn id="search_btn" class="btn btn-primary pull-right">Search</btn>
+ </div>
+ 
  
  <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -8,9 +13,9 @@
         <caption class="active">
           <div class="row ">
               <div class="hidden-xs col-sm-12 col-md-12 col-lg-12">
-                  <h1 class="text-left">Catalog</h1>
-                  <input type="text" id="search_input">
-                  <btn id="search_btn" class="btn btn-primary">Search</btn>
+                  <h1 class="text-center">Catalog</h1>
+                  <a href="/manufacturer/" class="btn btn-primary pull-right">Manufacturers</a>
+                  <a href="/location/" class="btn btn-primary pull-right">Locations</a>
                   <a href="/catalog.create/" class="pull-right btn btn-primary">Create New</a>
               </div>
           </div>
@@ -45,11 +50,7 @@
           </tr>
         %endfor
         </tbody>
-      </table>
-      <div>
-        <a href="/manufacturer/" class="btn btn-primary">Manufacturers</a>
-        <a href="/location/" class="btn btn-primary">Locations</a>
-      </div>
+      </table> 
     </div>
     <div class="hidden-xs hidden-sm hidden-md hidden-lg"></div>
   </div><!-- /.row -->
