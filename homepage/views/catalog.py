@@ -5,7 +5,6 @@ import homepage.models as hmod
 from django_mako_plus.controller.router import get_renderer
 from django.views.decorators.csrf import csrf_exempt
 from django import forms
-from django.core.exceptions import ValidationError
 
 templater = get_renderer('homepage')
 
@@ -134,3 +133,4 @@ class AssetForm(forms.Form):
   manufacturer = forms.ChoiceField(label='Manufacturer', required=False)
   part_num = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),max_length=30)
   maintenance_note = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),max_length=255)
+
