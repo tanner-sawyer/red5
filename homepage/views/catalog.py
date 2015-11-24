@@ -4,6 +4,7 @@ from django_mako_plus.controller import view_function
 import homepage.models as hmod
 from django_mako_plus.controller.router import get_renderer
 from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import ValidationError
 from django import forms
 
 templater = get_renderer('homepage')
@@ -124,7 +125,7 @@ class AssetForm(forms.Form):
     self.fields['location'].choices = getChoices()
     self.fields['manufacturer'].choices = getMan()
 
-  asset_code = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),unique=True,min_length=10,max_length=10)
+  asset_code = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),min_length=10,max_length=10)
   description = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),max_length=255)
   date_acquired = forms.DateField(widget=forms.TextInput(attrs={'class': 'form-control'}))
   location = forms.ChoiceField(required=False)
@@ -133,4 +134,9 @@ class AssetForm(forms.Form):
   manufacturer = forms.ChoiceField(label='Manufacturer', required=False)
   part_num = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),max_length=30)
   maintenance_note = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),max_length=255)
+  def clean_asset_code(self):
+    asset_code = self.cleaned_data['asset_code']
+    if hmod.Asset.objects.filter(asset_code=asset_code).count() > 0:
+        raise ValidationError('This display name is already in use.')
+    return asset_code
 
