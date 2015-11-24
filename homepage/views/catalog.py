@@ -45,6 +45,8 @@ def edit(request):
   if request.method == 'POST':
     form = AssetForm(request.POST)
     if form.is_valid():
+      print(form.cleaned_data['location'])
+      print('>>>>>>>>>>>>>>>>>>>>>>>>>..')
       asset.asset_code = form.cleaned_data['asset_code']
       asset.description = form.cleaned_data['description']
       asset.date_acquired = form.cleaned_data['date_acquired']
@@ -52,8 +54,8 @@ def edit(request):
       asset.date_assigned = form.cleaned_data['date_assigned']
       asset.part_num = form.cleaned_data['part_num']
       asset.maintenance_note = form.cleaned_data['maintenance_note']
-      place = hmod.Location.objects.get(place=form.cleaned_data['location'])
-      name = hmod.Manufacturers.objects.get(name=form.cleaned_data['manufacturer'])
+      place = hmod.Location.objects.get(id=form.cleaned_data['location'])
+      name = hmod.Manufacturers.objects.get(id=form.cleaned_data['manufacturer'])
       asset.location = place
       asset.manufacturer = name
 
