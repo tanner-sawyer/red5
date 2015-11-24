@@ -5,6 +5,7 @@ import homepage.models as hmod
 from django_mako_plus.controller.router import get_renderer
 from django.views.decorators.csrf import csrf_exempt
 from django import forms
+from django.core.exceptions import ValidationError
 
 templater = get_renderer('homepage')
 
@@ -124,7 +125,7 @@ class AssetForm(forms.Form):
     self.fields['location'].choices = getChoices()
     self.fields['manufacturer'].choices = getMan()
 
-  asset_code = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),min_length=10,max_length=10)
+  asset_code = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),unique=True,min_length=10,max_length=10)
   description = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),max_length=255)
   date_acquired = forms.DateField(widget=forms.TextInput(attrs={'class': 'form-control'}))
   location = forms.ChoiceField(required=False)
