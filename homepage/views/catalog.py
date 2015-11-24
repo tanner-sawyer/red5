@@ -45,8 +45,6 @@ def edit(request):
   if request.method == 'POST':
     form = AssetForm(request.POST)
     if form.is_valid():
-      print(form.cleaned_data['location'])
-      print('>>>>>>>>>>>>>>>>>>>>>>>>>..')
       asset.asset_code = form.cleaned_data['asset_code']
       asset.description = form.cleaned_data['description']
       asset.date_acquired = form.cleaned_data['date_acquired']
