@@ -13,6 +13,7 @@ templater = get_renderer('homepage')
 
 @view_function
 def process_request(request):
+  '''Loads the catalog.html'''
   params = {}
 
   asset = hmod.Asset.objects.all()
@@ -24,6 +25,7 @@ def process_request(request):
 
 @view_function
 def edit(request):
+  ''' Edits the data'''
   params = {}
 
   try:
@@ -32,7 +34,7 @@ def edit(request):
     return HttpResponseRedirect('/catalog/')
 
   location = hmod.Location.objects.get(id=asset.location_id)
-
+  # Loads form with data from db
   form = AssetForm(initial={
     'asset_code': asset.asset_code,
     'description': asset.description,
@@ -70,9 +72,11 @@ def edit(request):
 
 @view_function
 def create(request):
+  '''Function to create a new item '''
   params = {}
 
   a = hmod.Asset.objects.all().order_by("-id")
+  '''detects if there is a previously created instance '''
   if len(a) > 0:
   	if a[0].asset_code == '':
   		return HttpResponseRedirect('/catalog.edit/{}'.format(a[0].id))
@@ -99,6 +103,7 @@ def create(request):
 
 @view_function
 def delete(request):
+  ### Delete method
   params = {}
 
   try:
@@ -112,15 +117,21 @@ def delete(request):
 
 
 def getChoices():
+  '''
+    Generates the values in the location drop downs
+  '''
   choice_list = list(hmod.Location.objects.values_list('id','place'))
   return choice_list
 
 def getMan():
+  '''
+    Generates the values in the manufacturers drop downs
+  '''
   choice_list = list(hmod.Manufacturers.objects.values_list('id','name'))
   return choice_list
 
 class AssetForm(forms.Form):
-
+  # this def refreshes the values in the drop down boxes for new attributes
   def __init__(self, *args, **kwargs):
     super(AssetForm, self).__init__(*args, **kwargs)
     self.fields['location'].choices = getChoices()
@@ -135,8 +146,9 @@ class AssetForm(forms.Form):
   manufacturer = forms.ChoiceField(label='Manufacturer', required=False)
   part_num = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),max_length=30)
   maintenance_note = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),max_length=255)
+  # This clean method enforces unique values for the asset codes
   def clean_asset_code(self):
     asset_code = self.cleaned_data['asset_code']
     if hmod.Asset.objects.filter(asset_code=asset_code).count() > 0:
-        raise ValidationError('This display name is already in use.')
+        raise ValidationError('This asset code is already in use.')
     return asset_code

@@ -11,6 +11,7 @@ templater = get_renderer('homepage')
 
 @view_function
 def process_request(request):
+  '''Renders location.html'''
   params = {}
 
   location = hmod.Location.objects.all()
@@ -22,6 +23,7 @@ def process_request(request):
 
 @view_function
 def edit(request):
+  '''Edits the record'''
   params = {}
 
   try:
@@ -29,6 +31,7 @@ def edit(request):
   except hmod.Location.DoesNotExist:
     return HttpResponseRedirect('/location/')
 
+  # Pre loads the record value, if any
   form = LocForm(initial={
     'place': location.place,
   })
@@ -47,6 +50,7 @@ def edit(request):
 
 @view_function
 def create(request):
+  '''Creates new record'''
   params = {}
 
   a = hmod.Location.objects.all().order_by("-id")
@@ -65,6 +69,7 @@ def create(request):
 
 @view_function
 def delete(request):
+  '''Deletes record'''
   params = {}
 
   try:

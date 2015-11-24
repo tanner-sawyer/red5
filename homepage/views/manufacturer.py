@@ -11,6 +11,7 @@ templater = get_renderer('homepage')
 
 @view_function
 def process_request(request):
+  '''Loads manufacturers.html'''
   params = {}
 
   manufacturer = hmod.Manufacturers.objects.all()
@@ -21,6 +22,7 @@ def process_request(request):
 
 @view_function
 def edit(request):
+  ''' Edits manufacturers'''
   params = {}
 
   try:
@@ -28,6 +30,7 @@ def edit(request):
   except hmod.Manufacturers.DoesNotExist:
     return HttpResponseRedirect('/catalog/')
 
+  # Preloads form with data, if any
   form = ManForm(initial={
     'name': manufacturer.name,
   })
@@ -46,8 +49,10 @@ def edit(request):
 
 @view_function
 def create(request):
+  '''Creates new record'''
   params = {}
 
+  # Detects if there is a current, incomplete record
   a = hmod.Manufacturers.objects.all().order_by("-id")
   if len(a) > 0:
   	if a[0].name == '':
@@ -64,6 +69,7 @@ def create(request):
 
 @view_function
 def delete(request):
+  '''Deletes record'''
   params = {}
 
   try:
