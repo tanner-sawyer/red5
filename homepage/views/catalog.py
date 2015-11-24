@@ -6,6 +6,7 @@ from django_mako_plus.controller.router import get_renderer
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ValidationError
 from django import forms
+from django.core.exceptions import ValidationError
 
 templater = get_renderer('homepage')
 
@@ -139,4 +140,3 @@ class AssetForm(forms.Form):
     if hmod.Asset.objects.filter(asset_code=asset_code).count() > 0:
         raise ValidationError('This display name is already in use.')
     return asset_code
-
