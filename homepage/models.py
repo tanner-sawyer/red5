@@ -10,7 +10,7 @@ class Manufacturers(models.Model):
 
 
 class Asset(models.Model):
-	asset_code = models.TextField(max_length=10, null=True, blank=True)
+	asset_code = models.TextField(max_length=10, unique=True, null=True, blank=True)
 	description = models.TextField(max_length=255, null=True, blank=True)
 	date_acquired = models.DateField(null=True, blank=True)
 	location = models.ForeignKey(Location)
